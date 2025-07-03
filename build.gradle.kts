@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
 }
 
-version = "2.3.0-${stonecutter.current.version}"
+version = "2.4.0-${stonecutter.current.version}"
 group = "dev.ashhhleyyy"
 
 base {
