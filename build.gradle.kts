@@ -4,8 +4,12 @@ plugins {
     `maven-publish`
 }
 
-version = "2.3.0+${stonecutter.current.version}"
+version = "2.3.0-${stonecutter.current.version}"
 group = "dev.ashhhleyyy"
+
+base {
+    archivesName = "player-pronouns"
+}
 
 repositories {
     // needed for placeholder-api
@@ -33,6 +37,10 @@ dependencies {
     modImplementation("eu.pb4:placeholder-api:${mod.dep("placeholder_api")}")
     include("eu.pb4:placeholder-api:${mod.dep("placeholder_api")}")
 
+    // player-data-api
+    modImplementation("eu.pb4:player-data-api:${mod.dep("player_data_api")}")
+    include("eu.pb4:player-data-api:${mod.dep("player_data_api")}")
+
     // fabric-api-permissions
     modImplementation("me.lucko:fabric-permissions-api:${mod.dep("fabric_permissions_api")}")
     include("me.lucko:fabric-permissions-api:${mod.dep("fabric_permissions_api")}")
@@ -43,11 +51,15 @@ loom {
 }
 
 tasks.processResources {
-    inputs.property("version", project.version)
-
-    filesMatching("fabric.mod.json") {
-        expand("version" to project.version)
-    }
+    properties(listOf("fabric.mod.json"),
+        "version" to project.version,
+        "loader_version" to mod.dep("fabric_loader"),
+        "minecraft_version" to stonecutter.current.version,
+        "fabric_api_version" to mod.dep("fabric_api"),
+        "placeholder_api_version" to mod.dep("placeholder_api"),
+        "player_data_api_version" to mod.dep("player_data_api"),
+        "fabric_permissions_api_version" to mod.dep("fabric_permissions_api")
+    )
 }
 
 java {
@@ -66,6 +78,13 @@ tasks.jar {
     from("LICENSE") {
         rename { "${it}_${project.name}" }
     }
+}
+
+tasks.register<Copy>("buildAndCollect") {
+    group = "build"
+    from(tasks.remapJar.get().archiveFile, tasks.remapSourcesJar.get().archiveFile)
+    into(rootProject.layout.buildDirectory.file("libs"))
+    dependsOn("build")
 }
 
 modrinth {

@@ -1,5 +1,6 @@
 package dev.ashhhleyyy.playerpronouns.api;
 
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -78,11 +79,11 @@ public final class PronounsApi {
      * Methods in this class may invoke blocking IO operations to save the database to disk.
      */
     public interface PronounSetter {
-        default boolean setPronouns(ServerPlayerEntity player, @Nullable Pronouns pronouns) {
-            return this.setPronouns(player.getUuid(), pronouns);
+        default void setPronouns(ServerPlayerEntity player, @Nullable Pronouns pronouns) {
+            this.setPronouns(player.getServer(), player.getUuid(), pronouns);
         }
 
-        boolean setPronouns(UUID playerId, @Nullable Pronouns pronouns);
+        void setPronouns(MinecraftServer server, UUID playerId, @Nullable Pronouns pronouns);
     }
 
     /**
@@ -90,9 +91,9 @@ public final class PronounsApi {
      */
     public interface PronounReader {
         default @Nullable Pronouns getPronouns(ServerPlayerEntity player) {
-            return this.getPronouns(player.getUuid());
+            return this.getPronouns(player.getServer(), player.getUuid());
         }
 
-        @Nullable Pronouns getPronouns(UUID playerId);
+        @Nullable Pronouns getPronouns(MinecraftServer server, UUID playerId);
     }
 }

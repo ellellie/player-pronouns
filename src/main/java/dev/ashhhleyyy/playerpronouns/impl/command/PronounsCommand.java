@@ -44,13 +44,10 @@ public class PronounsCommand {
 
                                     Pronouns pronouns = Pronouns.fromString(pronounsString);
 
-                                    if (!PronounsApi.getSetter().setPronouns(player, pronouns)) {
-                                        ctx.getSource().sendError(Text.literal("Failed to update pronouns, sorry"));
-                                    } else {
-                                        ctx.getSource().sendFeedback(() -> Text.literal("Updated your pronouns to ")
-                                                .append(pronouns.formatted())
-                                                .formatted(Formatting.GREEN), false);
-                                    }
+                                    PronounsApi.getSetter().setPronouns(player, pronouns);
+                                    ctx.getSource().sendFeedback(() -> Text.literal("Updated your pronouns to ")
+                                            .append(pronouns.formatted())
+                                            .formatted(Formatting.GREEN), false);
 
                                     return Command.SINGLE_SUCCESS;
                                 })
@@ -65,12 +62,9 @@ public class PronounsCommand {
                 ).then(literal("unset")
                         .executes(ctx -> {
                             ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
-                            if (!PronounsApi.getSetter().setPronouns(player, null)) {
-                                ctx.getSource().sendError(Text.literal("Failed to update pronouns, sorry"));
-                            } else {
-                                ctx.getSource().sendFeedback(() -> Text.literal("Cleared your pronouns!")
-                                        .formatted(Formatting.GREEN), false);
-                            }
+                            PronounsApi.getSetter().setPronouns(player, null);
+                            ctx.getSource().sendFeedback(() -> Text.literal("Cleared your pronouns!")
+                                    .formatted(Formatting.GREEN), false);
                             return Command.SINGLE_SUCCESS;
                         })
                 ).then(literal("show")
