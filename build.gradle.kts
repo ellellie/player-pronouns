@@ -1,10 +1,10 @@
 plugins {
-    id("fabric-loom") version "1.7-SNAPSHOT"
+    id("fabric-loom") version "1.11-SNAPSHOT"
     id("com.modrinth.minotaur") version "2.+"
     `maven-publish`
 }
 
-version = "2.3.0+1.21.4"
+version = "2.3.0+${stonecutter.current.version}"
 group = "dev.ashhhleyyy"
 
 repositories {
@@ -22,20 +22,20 @@ repositories {
 
 dependencies {
     // Minecraft
-    minecraft(libs.minecraft)
-    mappings(variantOf(libs.yarn) { classifier("v2") })
+    minecraft("com.mojang:minecraft:${stonecutter.current.version}")
+    mappings("net.fabricmc:yarn:${mod.dep("yarn_mappings")}:v2")
 
     // Fabric
-    modImplementation(libs.fabric.loader)
-    modImplementation(libs.fabric.api)
+    modImplementation("net.fabricmc:fabric-loader:${mod.dep("fabric_loader")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${mod.dep("fabric_api")}")
 
     // placeholder-api
-    modImplementation(libs.placeholder.api)
-    include(libs.placeholder.api)
+    modImplementation("eu.pb4:placeholder-api:${mod.dep("placeholder_api")}")
+    include("eu.pb4:placeholder-api:${mod.dep("placeholder_api")}")
 
     // fabric-api-permissions
-    modImplementation(libs.fabric.permissions)
-    include(libs.fabric.permissions)
+    modImplementation("me.lucko:fabric-permissions-api:${mod.dep("fabric_permissions_api")}")
+    include("me.lucko:fabric-permissions-api:${mod.dep("fabric_permissions_api")}")
 }
 
 loom {
