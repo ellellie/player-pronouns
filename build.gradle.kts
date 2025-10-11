@@ -4,7 +4,7 @@ plugins {
     `maven-publish`
 }
 
-version = "2.4.0-${stonecutter.current.version}"
+version = "2.5.0-${stonecutter.current.version}"
 group = "dev.ashhhleyyy"
 
 base {
@@ -54,11 +54,10 @@ tasks.processResources {
     properties(listOf("fabric.mod.json"),
         "version" to project.version,
         "loader_version" to mod.dep("fabric_loader"),
-        "minecraft_version" to stonecutter.current.version,
+        "minecraft_version" to mod.prop("minecraft_range"),
         "fabric_api_version" to mod.dep("fabric_api"),
         "placeholder_api_version" to mod.dep("placeholder_api"),
-        "player_data_api_version" to mod.dep("player_data_api"),
-        "fabric_permissions_api_version" to mod.dep("fabric_permissions_api")
+        "player_data_api_version" to mod.dep("player_data_api")
     )
 }
 

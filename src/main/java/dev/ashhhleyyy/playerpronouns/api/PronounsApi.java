@@ -79,10 +79,6 @@ public final class PronounsApi {
      * Methods in this class may invoke blocking IO operations to save the database to disk.
      */
     public interface PronounSetter {
-        default void setPronouns(ServerPlayerEntity player, @Nullable Pronouns pronouns) {
-            this.setPronouns(player.getServer(), player.getUuid(), pronouns);
-        }
-
         void setPronouns(MinecraftServer server, UUID playerId, @Nullable Pronouns pronouns);
     }
 
@@ -90,10 +86,6 @@ public final class PronounsApi {
      * Allows obtaining a player's {@link Pronouns}
      */
     public interface PronounReader {
-        default @Nullable Pronouns getPronouns(ServerPlayerEntity player) {
-            return this.getPronouns(player.getServer(), player.getUuid());
-        }
-
         @Nullable Pronouns getPronouns(MinecraftServer server, UUID playerId);
     }
 }

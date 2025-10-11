@@ -44,7 +44,7 @@ public class PronounsCommand {
 
                                     Pronouns pronouns = Pronouns.fromString(pronounsString);
 
-                                    PronounsApi.getSetter().setPronouns(player, pronouns);
+                                    PronounsApi.getSetter().setPronouns(ctx.getSource().getServer(), player.getUuid(), pronouns);
                                     ctx.getSource().sendFeedback(() -> Text.literal("Updated your pronouns to ")
                                             .append(pronouns.formatted())
                                             .formatted(Formatting.GREEN), false);
@@ -62,7 +62,7 @@ public class PronounsCommand {
                 ).then(literal("unset")
                         .executes(ctx -> {
                             ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
-                            PronounsApi.getSetter().setPronouns(player, null);
+                            PronounsApi.getSetter().setPronouns(ctx.getSource().getServer(), player.getUuid(), null);
                             ctx.getSource().sendFeedback(() -> Text.literal("Cleared your pronouns!")
                                     .formatted(Formatting.GREEN), false);
                             return Command.SINGLE_SUCCESS;
@@ -71,7 +71,7 @@ public class PronounsCommand {
                         .then(argument("player", EntityArgumentType.player())
                                 .executes(ctx -> {
                                     ServerPlayerEntity player = EntityArgumentType.getPlayer(ctx, "player");
-                                    Pronouns pronouns = PronounsApi.getReader().getPronouns(player);
+                                    Pronouns pronouns = PronounsApi.getReader().getPronouns(ctx.getSource().getServer(), player.getUuid());
                                     if (pronouns != null) {
                                         ctx.getSource().sendFeedback(() -> Text.literal("")
                                                 .append(player.getDisplayName())

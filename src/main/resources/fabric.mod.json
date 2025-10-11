@@ -22,9 +22,9 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": ">=${fabric_api_version}",
-    "minecraft": "~${minecraft_version}",
+    "minecraft": "${minecraft_version}",
     "placeholder-api": "~${placeholder_api_version}",
     "player-data-api": "~${player_data_api_version}",
-    "fabric-permissions-api-v0": "~${fabric_permissions_api_version}"
+    "fabric-permissions-api-v0": "*"
   }
 }
